@@ -10,3 +10,5 @@ class ApiResponse {
         this.success = statusCodde < 400
     }
 }
+
+export default ApiResponse
