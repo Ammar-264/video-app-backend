@@ -22,29 +22,31 @@ export const registerUser =asyncHandler(async(req,res)=>{
         throw new ApiError(400 , "Kindly fill all the fields correctly")
     }
 
-    let usernameLowercase = username.toLowerCaser()
+    let usernameLowercase = username.toLowerCase()
 
-   const usernameExists =  UserModel.findOne({
+   const usernameExists = await UserModel.findOne({
         username:usernameLowercase
     })
     if(usernameExists) throw new ApiError(409 , "Username already exist")
     
 
-
-   const emailExists =  UserModel.findOne({
+   const emailExists = await UserModel.findOne({
         email
     })
     if(emailExists) throw new ApiError(409 , "email already exist")
 
+    
+    const avatartLocalPath = req.files.avatar && req.files.avatar[0]?.path
+    const coverImageLocalPath = req.files.coverImage && req.files.coverImage[0]?.path
 
-    const avatartLocalPath = req.files?.avatar[0]?.path
-    const coverImageLocalPath = req.files?.coverImage[0]?.path
     
     if(!avatartLocalPath) throw new ApiError(400 , "Avatar file is required")
     
     
     const avatarUploadResponse =  await uploadOnCloudinary(avatartLocalPath)
     const coverImageUploadResponse =  await uploadOnCloudinary(coverImageLocalPath)
+
+    console.log(avatarUploadResponse);
     
     if(!avatarUploadResponse) throw new ApiError(400 , "Avatar file is required")
 
