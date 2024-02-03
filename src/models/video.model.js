@@ -7,8 +7,9 @@ const VideoSchema =new mongoose.Schema({
     required:true
    },
 
-   videoFile:{
+   thumbnail:{
     type:String,
+    required:true
    },
 
    owner:{
@@ -37,7 +38,8 @@ const VideoSchema =new mongoose.Schema({
    },
 
    isPublished:{
-    type:Boolean
+    type:Boolean,
+    default:true
    },
 
 }, {timestamps : true})

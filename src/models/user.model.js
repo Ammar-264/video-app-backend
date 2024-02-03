@@ -38,12 +38,12 @@ const UserSchema =new mongoose.Schema({
     refreshToken:{
         type:String
     },
-    watchHistory :[
-        {
-            type:mongoose.Schema.Types.ObjectId,
-            ref:"Video"
-        }
-    ]
+    // watchHistory :[
+    //     {
+    //         type:mongoose.Schema.Types.ObjectId,
+    //         ref:"Video"
+    //     }
+    // ]
 }, {timestamps : true})
 
 UserSchema.pre("save" , async function (next){
@@ -59,7 +59,7 @@ UserSchema.methods.isPasswordCorrect = async function(password){
 }
 
 UserSchema.methods.generateAccessToken = function(){
-    jwt.sign(
+   return jwt.sign(
         {
             payload:{
                 _id:this._id,
@@ -75,7 +75,7 @@ UserSchema.methods.generateAccessToken = function(){
     )
 }
 UserSchema.methods.generateRefreshToken = function(){
-    jwt.sign(
+   return jwt.sign(
         {
             payload:{
                 _id:this._id,
